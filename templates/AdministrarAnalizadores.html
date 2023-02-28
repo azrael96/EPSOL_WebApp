@@ -1,0 +1,40 @@
+{% extends "main.html" %}
+{% block titulo %} Analizadores {% endblock %}
+{% block contenido %}
+
+    <div class="content">
+        <h2>Analizadores</h2>
+        <div>
+            <a class="button is-green" href="{{url_for('AddAnalizer')}}" >Agregar Analizador</a>
+            <br><br>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fabricante</th>
+                        <th>Uso</th>
+                        <th>Clase</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ana in analizers %}
+                    <tr>
+                        <td>{{ana[1]}}</td>
+                        <td>{{ana[2]}}</td>
+                        <td>{{ana[3]}}</td>
+                        <td>
+                            <a href="{{url_for('UpdateAnalizer', id=ana[0])}}" class="button is-blue">Editar</a>
+                        </td>
+                        <td>
+                            <form action="{{url_for('DelAnalizer')}}" method="POST">
+                                <input type="hidden" name="id" value="{{ana[0]}}">
+                                <button class="button is-red">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

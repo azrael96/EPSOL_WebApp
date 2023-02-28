@@ -1,0 +1,50 @@
+{% extends "main.html" %}
+{% block titulo %} Clientes {% endblock %}
+{% block contenido %}
+
+    <div class="content">
+        <h2>Clientes</h2>
+        <div>
+            <a class="button is-green" href="{{url_for('AddClient')}}" >Agregar Cliente</a>
+            <br><br>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Dirección</th>
+                        <th>Ciudad</th>
+                        <th>Estado</th>
+                        <th>Teléfono</th>
+                        <th>Suscripción</th>
+                        <th>Pago</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cli in clientes %}
+                    <tr>
+                        <td>{{cli[1]}}</td>
+                        <td>{{cli[4]}}</td>
+                        <td>{{cli[5]}}</td>
+                        <td>{{cli[6]}}</td>
+                        <td>{{cli[7]}}</td>
+                        <td>{{cli[2]}}</td>
+                        <td>{{cli[3]}}</td>
+                        <td>
+                            <a href="{{url_for('UpdateClient', id=cli[0])}}" class="button is-blue">Editar</a>
+                        </td>
+                        <td>
+                            <form action="{{url_for('DelClient')}}" method="POST">
+                                <input type="hidden" name="id" value="{{cli[0]}}">
+                                <button class="button is-red">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

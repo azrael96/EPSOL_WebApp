@@ -1,0 +1,26 @@
+{% extends "main.html" %}
+{% block titulo %} Dashboard {% endblock %}
+{% block contenido %}
+
+<div class="content">
+    <h2>Información del Perfil</h2>
+    <div>
+        <p>La informacion de su cuenta es:</p>
+        <table>
+            <tr>
+                <td>Activo:</td>
+                <td>{{ session['loggedin'] }}</td>
+            </tr>
+            <tr>
+                <td>ID:</td>
+                <td>{{ session['id'] }}</td>
+            </tr>
+            <tr>
+                <td>Username:</td>
+                <td>{{ session['username'] }}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

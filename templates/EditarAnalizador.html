@@ -1,0 +1,32 @@
+{% extends "main.html" %}
+{% block titulo %} Editar Analizador {% endblock %}
+{% block contenido %}
+
+    <div class="content">
+        <h2>Editar Analizador</h2>
+        <div>
+            <p>Edite los datos del Analizador:</p>
+            <form action="{{url_for('SaveUpdateAnalizer')}}" method="post">
+            <table>
+                <input type="hidden" name="id" value="{{analizer[0]}}">
+                <tr>
+                    <td><label for="fabricante">Fabricante:</label></td>
+                    <td><input required type="text" class="input" placeholder="Fabricante" name="fabricante" id="fabricante" value="{{analizer[1]}}"></td>
+                </tr>
+                <tr>
+                    <td><label for="uso">Uso:</label></td>
+                    <td><input type="checkbox" class="input" placeholder="Uso" name="uso" id="uso" value="{{analizer[2]}}"></td>
+                </tr>
+                <tr>
+                    <td><label for="clase">Clase:</label></td>
+                    <td><input required type="text" class="input" placeholder="Clase" name="clase" id="clase" value="{{analizer[3]}}"></td>
+                </tr>
+            </table>
+                <br>
+                <button type="submit" class="button is-green">Guardar</button>
+                <a href="{{url_for('AdminAnalizers')}}" class="button is-base">Volver</a>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "main.html" %}
+{% block titulo %} Usuarios {% endblock %}
+{% block contenido %}
+
+    <div class="content">
+        <h2>Usuarios</h2>
+        <div>
+            <a class="button is-green" href="{{url_for('AddUser')}}" >Agregar Usuario</a>
+            <br><br>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Contraseña</th>
+                        <th>Tipo</th>
+                        <th>Correo</th>
+                        <th>Nick</th>
+                        <th>Client</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for use in users %}
+                    <tr>
+                        <td>{{use[1]}}</td>
+                        <td>{{use[2]}}</td>
+                        <td>{{use[3]}}</td>
+                        <td>{{use[4]}}</td>
+                        <td>{{use[6]}}</td>
+                        <td>{{use[5]}}</td>
+                        <td>
+                            <a href="{{url_for('UpdateUser', id=use[0])}}" class="button is-blue">Editar</a>
+                        </td>
+                        <td>
+                            <form action="{{url_for('DelUser')}}" method="POST">
+                                <input type="hidden" name="id" value="{{use[0]}}">
+                                <button class="button is-red">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

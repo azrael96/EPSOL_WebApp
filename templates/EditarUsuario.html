@@ -1,0 +1,45 @@
+{% extends "main.html" %}
+{% block titulo %} Editar Usuario {% endblock %}
+{% block contenido %}
+
+    <div class="content">
+        <h2>Editar Usuario</h2>
+        <div>
+            <p>Edite los datos del Usuario:</p>
+            <form action="{{url_for('SaveUpdateUser')}}" method="post">
+            <table>
+                <input type="hidden" name="id" value="{{user[0]}}">
+                <tr>
+                    <td><label for="nombre">Nombre:</label></td>
+                    <td><input required type="text" class="input" placeholder="Nombre" name="nombre" id="nombre" value="{{user[1]}}"></td>
+                </tr>
+                <tr>
+                    <td><label for="password">Contraseña:</label></td>
+                    <td><input required type="text" class="input" placeholder="Contraseña" name="password" id="password" value="{{user[2]}}"></td>
+                </tr>
+                <tr>
+                    <td><label for="tipo">Tipo:</label></td>
+                    <td><input required type="text" class="input" placeholder="Tipo" name="tipo" id="tipo" value="{{user[3]}}"></td>
+                </tr>
+                <tr>
+                    <td><label for="correo">Correo:</label></td>
+                    <td><input required type="text" class="input" placeholder="Correo" name="correo" id="correo" value="{{user[4]}}"></td>
+                </tr>
+                <tr>
+                    <td><label for="nick">Nick:</label></td>
+                    <td><input required type="text" class="input" placeholder="Nick" name="nick" id="nick" value="{{user[6]}}"></td>
+                </tr>
+                <tr>
+                    <!--Este campo es diferente prob combo box conectado a cliente-->
+                    <td><label for="cliente">Cliente:</label></td>
+                    <td><input required type="text" class="input" placeholder="Cliente" name="cliente" id="cliente" value="{{user[5]}}"></td>
+                </tr>
+            </table>
+                <br>
+                <button type="submit" class="button is-green">Guardar</button>
+                <a href="{{url_for('AdminUsers')}}" class="button is-base">Volver</a>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

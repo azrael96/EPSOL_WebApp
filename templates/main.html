@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>EPSOL - {% block titulo %}{% endblock %}</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+    </head>
+
+    <body>
+        <nav class="navtop">
+            <div>
+                <h1>EPSOL - Website</h1>
+                <a href="{{ url_for('GoDashboard') }}"><i class="fas fa-home"></i>Home</a>
+                <a href="{{ url_for('GoPerfil') }}"><i class="fas fa-user-circle"></i>Profile</a>
+                <a href=""><i class="fas fa-sign-out-alt"></i>Logout</a>
+            </div>
+        </nav>
+
+        {%block contenido %} {% endblock %}
+
+    </body>
+
+</html>

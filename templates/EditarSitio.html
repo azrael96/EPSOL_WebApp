@@ -1,0 +1,33 @@
+{% extends "main.html" %}
+{% block titulo %} Editar Sitio {% endblock %}
+{% block contenido %}
+
+    <div class="content">
+        <h2>Editar Sitio</h2>
+        <div>
+            <p>Edite los datos del Sitio:</p>
+            <form action="{{url_for('SaveUpdatePlace')}}" method="post">
+            <table>
+                <input type="hidden" name="id" value="{{place[0]}}">
+                <tr>
+                    <td><label for="nombre">Nombre:</label></td>
+                    <td><input required type="text" class="input" placeholder="Nombre" name="nombre" id="nombre" value="{{place[1]}}"></td>
+                </tr>
+                <tr>
+                    <td><label for="ubicación">Ubicación:</label></td>
+                    <td><input required type="text" class="input" placeholder="Ubicación" name="ubicación" id="ubicación" value="{{place[2]}}"></td>
+                </tr>
+                <tr>
+                    <!--Este campo es diferente prob combo box conectado a cliente-->
+                    <td><label for="cliente">Cliente:</label></td>
+                    <td><input required type="text" class="input" placeholder="Cliente" name="cliente" id="cliente" value="{{place[3]}}"></td>
+                </tr>
+            </table>
+                <br>
+                <button type="submit" class="button is-green">Guardar</button>
+                <a href="{{url_for('AdminPlaces')}}" class="button is-base">Volver</a>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

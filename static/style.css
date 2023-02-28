@@ -1,0 +1,253 @@
+html {
+/* Palette */
+    --high-red: #b52f2f;
+    --low-red: #a33232;
+    --high-blue: #2f3db5;
+    --low-blue: #344ca5;
+    --high-green: #4bb52f;
+    --low-green: #40a534;
+    --high-cyan: #2fb5ae;
+    --low-cyan: #34a59e;
+    --pixie-cyan: #328EA3;
+    --high-pixie-cyan: #63c8d4;
+
+/* most used */
+    --grey-line: #bcbcbc;
+    --grey-bg: #f3f4f7;
+    --grey-shadow: rgba(0, 0, 0, 0.25);
+    --grey-text: #708090;
+    --light-text: #f5f5f5;
+}
+
+/* General configs */
+* {
+    box-sizing: border-box;
+    font-family: BlinkMacSystemFont, "segoe ui", roboto, oxygen, ubuntu, cantarell, "fira sans", "droid sans", "helvetica neue", Arial, sans-serif;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+}
+body {
+    background-color: var(--grey-bg);
+    margin: 0;
+}
+
+/* Login configs */
+.login {
+    width: 400px;
+    background-color: white;
+    box-shadow: 0 0 9px 0 var(--grey-shadow);
+    margin: 100px auto;
+}
+.login h1 {
+    text-align: center;
+    color: var(--grey-text);
+    font-size: 26px;
+    padding: 20px 0 20px 0;
+    border-bottom: 1px solid var(--grey-text);
+}
+.login .links {
+    display: flex;
+    padding: 0 15px;
+}
+.login .links a {
+    text-decoration: none;
+    display: inline-flex;
+    padding: 0 10px 10px 10px;
+    font-weight: bold;
+    border-bottom: 2px solid var(--pixie-cyan);
+    color: var(--pixie-cyan);
+}
+.login form{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 20px;
+}
+.login form label{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    background-color: var(--pixie-cyan);
+    color: white;
+}
+.login form input[type="password"], .login form input[type="text"] {
+    width: 310px;
+    height: 50px;
+    border: 1px solid var(--grey-text);
+    margin-bottom: 20px;
+    padding: 0 15px;
+}
+.login form input[type="submit"]{
+    width: 100%;
+    padding: 15px;
+    margin-top: 20px;
+    background-color: var(--pixie-cyan);
+    border: 0;
+    cursor: pointer;
+    font-weight: bold;
+    color: white;
+    transition: background-color 0.2s;
+    size: 24px;
+}
+.login form input[type="submit"]:hover{
+    background-color: var(--high-pixie-cyan);
+    transition: background-color 0.2s;
+}
+
+/* navigation bar configs */
+.navtop {
+    background-color: var(--pixie-cyan);
+    height: 60px;
+    width: 100%;
+    border: 0;
+}
+.navtop div {
+    display: flex;
+    margin: 0 auto;
+    width: 1000px;
+    height: 100%;
+}
+.navtop div h1, .navtop div a {
+    display: inline-flex;
+    align-items: center;
+}
+.navtop div h1 {
+    flex: 1;
+    font-size: 24px;
+    padding: 0;
+    margin: 0;
+    color: var(--light-text);
+    font-weight: normal;
+}
+.navtop div a {
+    padding: 0 20px;
+    text-decoration: none;
+    color: var(--light-text);
+    font-weight: bold;
+}
+.navtop div a i {
+    padding: 2px 8px 0 0;
+}
+.navtop div a:hover {
+    color: var(--high-pixie-cyan);
+}
+
+/* center content configs */
+.content {
+    width: 1000px;
+    margin: 0 auto;
+}
+.content h2 {
+    margin: 0;
+    padding: 20px 0;
+    font-size: 22px;
+    border-bottom: 1px solid var(--grey-line);
+    color: var(--pixie-cyan);
+}
+.content > p, .content > div {
+    box-shadow: 0 0 5px 0 var(--grey-shadow);
+    margin: 25px 0;
+    padding: 25px;
+    background-color: white;
+}
+.content > p table td, .content > div table td {
+  padding: 5px;
+}
+.content > p table td:first-child, .content > div table td:first-child {
+  font-weight: bold;
+  color: var(--pixie-cyan);
+  padding-right: 15px;
+}
+.content > div p {
+  padding: 5px;
+  margin: 0 0 10px 0;
+}
+
+/* buttons configs */
+.button {
+    -webkit-appearance: none;
+    align-items: center;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    border-color: var(--pixie-cyan);
+    border-width: 1px;
+    box-shadow: none;
+    display: inline-flex;
+
+    font-size: 1rem;
+    font-family: BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica, Arial, sans-serif
+    height: 2.5em;
+    justify-content: flex-start;
+    line-height: 1.5;
+    position: relative;
+    vertical-align: top
+    margin: 0;
+    background-color: white;
+    color: var(--pixie-cyan);
+    cursor: pointer;
+    justify-content: center;
+    padding-bottom: calc(.5em - 1px);
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-top: calc(.5em - 1px);
+    text-align: center;
+    white-space: nowrap;
+}
+.button:hover, .button:focus {
+    border-color: blue;
+    color: blue;
+}
+.button:active {
+    border-color: red;
+    color: red;
+}
+
+/* blue button configs */
+.button.is-blue {
+    background-color: var(--high-blue);
+    border-color: transparent;
+    color: white;
+}
+.button.is-blue:hover, .button.is-blue:focus {
+    background-color: var(--low-blue);
+    border-color: transparent;
+    color: white;
+}
+
+/* green button configs */
+.button.is-green {
+    background-color: var(--high-green);
+    border-color: transparent;
+    color: white;
+}
+.button.is-green:hover, .button.is-green:focus {
+    background-color: var(--low-green);
+    border-color: transparent;
+    color: white;
+}
+
+/* red button configs */
+.button.is-red {
+    background-color: var(--high-red);
+    border-color: transparent;
+    color: white;
+}
+.button.is-red:hover, .button.is-red:focus {
+    background-color: var(--low-red);
+    border-color: transparent;
+    color: white;
+}
+
+/* cyan button configs */
+.button.is-base {
+    background-color: var(--high-cyan);
+    border-color: transparent;
+    color: white;
+}
+.button.is-base:hover, .button.is-base:focus {
+    background-color: var(--low-cyan);
+    border-color: transparent;
+    color: white;
+}

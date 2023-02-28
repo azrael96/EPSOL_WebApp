@@ -1,0 +1,40 @@
+{% extends "main.html" %}
+{% block titulo %} Editar Cliente {% endblock %}
+{% block contenido %}
+
+    <div class="content">
+        <h2>Editar cliente</h2>
+        <div>
+            <p>Edite los datos del cliente:</p>
+            <form action="{{url_for('SaveUpdateClient')}}" method="post">
+            <table>
+                <input type="hidden" name="id" value="{{client[0]}}">
+                <tr>
+                    <td><label for="nombre">Nombre:</label></td>
+                    <td><input required type="text" class="input" placeholder="Nombre" name="nombre" id="nombre" value="{{client[1]}}"></td>
+                </tr>
+                <tr>
+                    <td><label for="direccion">Dirección:</label></td>
+                    <td><input required type="text" class="input" placeholder="Dirección" name="direccion" id="direccion" value="{{client[4]}}"></td>
+                </tr>
+                <tr>
+                    <td><label for="ciudad">Ciudad:</label></td>
+                    <td><input required type="text" class="input" placeholder="Ciudad" name="ciudad" id="ciudad" value="{{client[5]}}"></td>
+                </tr>
+                <tr>
+                    <td><label for="estado">Estado:</label></td>
+                    <td><input required type="text" class="input" placeholder="Estado" name="estado" id="estado" value="{{client[6]}}"></td>
+                </tr>
+                <tr>
+                    <td><label for="telefono">Teléfono</label></td>
+                    <td><input required type="number" class="input" placeholder="Teléfono" name="telefono" id="telefono" value="{{client[7]}}"></td>
+                </tr>
+            </table>
+                <br>
+                <button type="submit" class="button is-green">Guardar</button>
+                <a href="{{url_for('AdminClients')}}" class="button is-base">Volver</a>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

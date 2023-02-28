@@ -1,0 +1,32 @@
+{% extends "main.html" %}
+{% block titulo %} Agregar Analizador {% endblock %}
+{% block contenido %}
+
+    <div class="content">
+        <h2>Agregar Analizador</h2>
+        <div>
+            <p>Ingrese los datos del Analizador nuevo:</p>
+            <form action="{{url_for('SaveAddAnalizer')}}" method="post">
+            <table>
+                <tr>
+                    <td><label for="fabricante">Fabricante:</label></td>
+                    <td><input required type="text" class="input" placeholder="Fabricante" name="fabricante" id="fabricante"></td>
+                </tr>
+                <tr>
+                    <td><label for="uso">Uso:</label></td>
+                    <td><input type="checkbox" class="input" placeholder="Uso" name="uso" id="uso"></td>
+                </tr>
+                <tr>
+                    <td><label for="clase">Clase:</label></td>
+                    <td><input required type="text" class="input" placeholder="Clase" name="clase" id="clase"></td>
+                </tr>
+            </table>
+                <br>
+                <button type="submit" class="button is-green">Guardar</button>
+                <a href="{{url_for('AdminAnalizers')}}" class="button is-base">Volver</a>
+            </form>
+        </div>
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "main.html" %}
+{% block titulo %} Dashboard {% endblock %}
+{% block contenido %}
+
+<div class="content">
+    <h2>Panel de Servicios</h2>
+    <div>
+        <p>Servicios disponibles para su rol:</p>
+        <table>
+            <tr>
+                <form action="{{ url_for('AdminClients') }}">
+                    <button class="button">Administrar Clientes</button>
+                </form>
+            </tr>
+            <tr>
+                <form action="{{ url_for('AdminUsers') }}">
+                    <button class="button">Administrar Usuarios</button>
+                </form>
+            </tr>
+            <tr>
+                <form action="{{ url_for('AdminPlaces') }}">
+                    <button class="button">Administrar Sitios</button>
+                </form>
+            </tr>
+            <tr>
+                <form action="{{ url_for('AdminAnalizers') }}">
+                    <button class="button">Administrar Analizadores</button>
+                </form>
+            </tr>
+            <tr>
+                <form action="{{ url_for('GoMediciones') }}">
+                    <button class="button">Visualizar Mediciones</button>
+                </form>
+            </tr>
+        </table>
+    </div>
+
+
+</div>
+
+{% endblock %}

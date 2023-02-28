@@ -1,0 +1,40 @@
+{% extends "main.html" %}
+{% block titulo %} Sitios {% endblock %}
+{% block contenido %}
+
+    <div class="content">
+        <h2>Sitios</h2>
+        <div>
+            <a class="button is-green" href="{{url_for('AddPlace')}}" >Agregar Sitio</a>
+            <br><br>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Ubicación</th>
+                        <th>Cliente</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pla in places %}
+                    <tr>
+                        <td>{{pla[1]}}</td>
+                        <td>{{pla[2]}}</td>
+                        <td>{{pla[3]}}</td>
+                        <td>
+                            <a href="{{url_for('UpdatePlace', id=pla[0])}}" class="button is-blue">Editar</a>
+                        </td>
+                        <td>
+                            <form action="{{url_for('DelPlace')}}" method="POST">
+                                <input type="hidden" name="id" value="{{pla[0]}}">
+                                <button class="button is-red">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

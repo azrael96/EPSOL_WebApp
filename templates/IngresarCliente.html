@@ -1,0 +1,40 @@
+{% extends "main.html" %}
+{% block titulo %} Agregar Cliente {% endblock %}
+{% block contenido %}
+
+    <div class="content">
+        <h2>Agregar Cliente</h2>
+        <div>
+            <p>Ingrese los datos del cliente nuevo:</p>
+            <form action="{{url_for('SaveAddClient')}}" method="post">
+            <table>
+                <tr>
+                    <td><label for="nombre">Nombre:</label></td>
+                    <td><input required type="text" class="input" placeholder="Nombre" name="nombre" id="nombre"></td>
+                </tr>
+                <tr>
+                    <td><label for="direccion">Dirección:</label></td>
+                    <td><input required type="text" class="input" placeholder="Dirección" name="direccion" id="direccion"></td>
+                </tr>
+                <tr>
+                    <td><label for="ciudad">Ciudad:</label></td>
+                    <td><input required type="text" class="input" placeholder="Ciudad" name="ciudad" id="ciudad"></td>
+                </tr>
+                <tr>
+                    <td><label for="estado">Estado:</label></td>
+                    <td><input required type="text" class="input" placeholder="Estado" name="estado" id="estado"></td>
+                </tr>
+                <tr>
+                    <td><label for="telefono">Teléfono</label></td>
+                    <td><input required type="number" class="input" placeholder="Teléfono" name="telefono" id="telefono"></td>
+                </tr>
+            </table>
+                <br>
+                <button type="submit" class="button is-green">Guardar</button>
+                <a href="{{url_for('AdminClients')}}" class="button is-base">Volver</a>
+            </form>
+        </div>
+    </div>
+
+
+{% endblock %}

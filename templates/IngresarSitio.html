@@ -1,0 +1,33 @@
+{% extends "main.html" %}
+{% block titulo %} Agregar Sitio {% endblock %}
+{% block contenido %}
+
+    <div class="content">
+        <h2>Agregar Sitio</h2>
+        <div>
+            <p>Ingrese los datos del Sitio nuevo:</p>
+            <form action="{{url_for('SaveAddPlace')}}" method="post">
+            <table>
+                <tr>
+                    <td><label for="nombre">Nombre:</label></td>
+                    <td><input required type="text" class="input" placeholder="Nombre" name="nombre" id="nombre"></td>
+                </tr>
+                <tr>
+                    <td><label for="ubicación">Ubicación:</label></td>
+                    <td><input required type="text" class="input" placeholder="Ubicación" name="ubicación" id="ubicación"></td>
+                </tr>
+                <tr>
+                    <!--Este campo es diferente prob combo box conectado a cliente-->
+                    <td><label for="cliente">Cliente:</label></td>
+                    <td><input required type="text" class="input" placeholder="Cliente" name="cliente" id="cliente" value="100000"></td>
+                </tr>
+            </table>
+                <br>
+                <button type="submit" class="button is-green">Guardar</button>
+                <a href="{{url_for('AdminPlaces')}}" class="button is-base">Volver</a>
+            </form>
+        </div>
+    </div>
+
+
+{% endblock %}
