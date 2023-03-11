@@ -27,7 +27,25 @@
                 </tr>
                 <tr>
                     <td><label for="telefono">Teléfono</label></td>
-                    <td><input required type="number" class="input" placeholder="Teléfono" name="telefono" id="telefono" value="{{client[7]}}"></td>
+                    <td><input required type="number" class="input" placeholder="Teléfono" name="telefono" id="telefono" value="{{client[7]}}{{client[7]}}"></td>
+                </tr>
+                <tr>
+                    <td><label for="suscripcion">Suscripcion</label></td>
+                    <td>
+                        <select name="suscripcion" id="suscripcion">
+                            <option value= "1" {% if client[2] == 1 %} SELECTED {% endif %}>Activa</option>"
+                            <option value= "0" {% if client[2] == 0 %} SELECTED {% endif %}>Inactiva</option>"
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="pago">Pago</label></td>
+                    <td>
+                        <select name="pago" id="pago">
+                            <option value= "1" {% if client[3] == 1 %} SELECTED {% endif %}>Realizado</option>"
+                            <option value= "0" {% if client[3] == 0 %} SELECTED {% endif %}>Pendiente</option>"
+                        </select>
+                    </td>
                 </tr>
             </table>
                 <br>

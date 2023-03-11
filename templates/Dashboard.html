@@ -7,31 +7,37 @@
     <div>
         <p>Servicios disponibles para su rol:</p>
         <table>
-            <tr>
+            {% if session['Tipo'] == 'Admin' %}
+            <tr><td>
                 <form action="{{ url_for('AdminClients') }}">
-                    <button class="button">Administrar Clientes</button>
+                    <button class="button moreWidth">Administrar Clientes</button>
                 </form>
-            </tr>
-            <tr>
+            </td></tr>
+            {% endif %}
+            {% if session['Tipo'] != 'Usuario' %}
+            <tr><td>
                 <form action="{{ url_for('AdminUsers') }}">
-                    <button class="button">Administrar Usuarios</button>
+                    <button class="button moreWidth">Administrar Usuarios</button>
                 </form>
-            </tr>
-            <tr>
+            </td></tr>
+            {% endif %}
+            <tr><td>
                 <form action="{{ url_for('AdminPlaces') }}">
-                    <button class="button">Administrar Sitios</button>
+                    <button class="button moreWidth">Administrar Sitios</button>
                 </form>
-            </tr>
-            <tr>
+            </td></tr>
+            <tr><td>
                 <form action="{{ url_for('AdminAnalizers') }}">
-                    <button class="button">Administrar Analizadores</button>
+                    <button class="button moreWidth">Administrar Analizadores</button>
                 </form>
-            </tr>
-            <tr>
+            </td></tr>
+            {% if session['Tipo'] != 'Admin' %}
+            <tr><td>
                 <form action="{{ url_for('GoMediciones') }}">
-                    <button class="button">Visualizar Mediciones</button>
+                    <button class="button moreWidth">Visualizar Mediciones</button>
                 </form>
-            </tr>
+            </td></tr>
+            {% endif %}
         </table>
     </div>
 

@@ -4,6 +4,7 @@
 
     <div class="content">
         <h2>Mediciones</h2>
+        {% if session['Tipo'] != 'Admin' %}
         <div>
             <table>
                 <thead>
@@ -24,6 +25,7 @@
                 </tbody>
             </table>
         </div>
+        {% endif %}
     </div>
 
 {% endblock %}

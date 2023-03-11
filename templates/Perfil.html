@@ -8,16 +8,28 @@
         <p>La informacion de su cuenta es:</p>
         <table>
             <tr>
-                <td>Activo:</td>
-                <td>{{ session['loggedin'] }}</td>
+                <td>Nombre:</td>
+                <td>{{ session['Nombre'] }}</td>
             </tr>
             <tr>
-                <td>ID:</td>
-                <td>{{ session['id'] }}</td>
+                <td>Nick:</td>
+                <td>{{ session['Nick'] }}</td>
             </tr>
             <tr>
-                <td>Username:</td>
-                <td>{{ session['username'] }}</td>
+                <td>Estado:</td>
+                <td>{{ session['Estado'] }}</td>
+            </tr>
+            <tr>
+                <td>Tipo de Usuario:</td>
+                <td>{{ session['Tipo'] }}</td>
+            </tr>
+            <tr>
+                <td>Correo:</td>
+                <td>{{ session['Correo'] }}</td>
+            </tr>
+            <tr>
+                <td>Cliente:</td>
+                <td>{{ session['Cliente'] }}</td>
             </tr>
         </table>
     </div>

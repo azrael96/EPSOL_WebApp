@@ -5,8 +5,11 @@
     <div class="content">
         <h2>Usuarios</h2>
         <div>
+            {% if session['Tipo'] != 'Usuario' %}
+            {% if session['Tipo'] == 'Cliente' %}
             <a class="button is-green" href="{{url_for('AddUser')}}" >Agregar Usuario</a>
             <br><br>
+            {% endif %}
             <table>
                 <thead>
                     <tr>
@@ -15,7 +18,7 @@
                         <th>Tipo</th>
                         <th>Correo</th>
                         <th>Nick</th>
-                        <th>Client</th>
+                        {% if session['Tipo'] == 'Admin' %}<th>Client</th>{% endif %}
                     </tr>
                 </thead>
                 <tbody>
@@ -26,7 +29,8 @@
                         <td>{{use[3]}}</td>
                         <td>{{use[4]}}</td>
                         <td>{{use[6]}}</td>
-                        <td>{{use[5]}}</td>
+                        {% if session['Tipo'] == 'Admin' %}<td>{{use[5]}}</td>{% endif %}
+                        {% if session['Tipo'] == 'Cliente' %}
                         <td>
                             <a href="{{url_for('UpdateUser', id=use[0])}}" class="button is-blue">Editar</a>
                         </td>
@@ -36,10 +40,12 @@
                                 <button class="button is-red">Eliminar</button>
                             </form>
                         </td>
+                        {% endif %}
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
+            {% endif %}
         </div>
     </div>
 

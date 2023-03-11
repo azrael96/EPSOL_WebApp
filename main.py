@@ -1,81 +1,120 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, url_for
 import connect as conn
 
 app = Flask(__name__)
-app.secret_key = 'secretkey'
+app.secret_key = '5e20e862a2afa65e8189e348cdfe7579c11a2e83'
 
 if "__name__" == "__main__":
     app.run(debug=True)
 
 @app.route('/')
 def index():
-    return render_template("Login.html")
+    if 'Nick' in session:
+        return redirect(url_for('GoDashboard'))
+    else:
+        return render_template('Login.html')
 
 @app.route('/Login', methods=['GET', 'POST'])
-def login():
+def Login():
     msg = ''
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
         username = request.form['username']
         password = request.form['password']
         account = conn.searchLogin(username, password)
         if account:
-            session['loggedin'] = True
-            session['id'] = account[0]
-            session['username'] = account[1]
-            return render_template('Dashboard.html')
+            session['Nombre'] = account[0]
+            session['Nick'] = account[3]
+            session['Estado'] = 'En Linea'
+            session['Tipo'] = account[1]
+            session['Correo'] = account[2]
+            session['Cliente'] = account[5]
+            session['CodCli'] = account[6]
+            return redirect(url_for('GoDashboard'))
         else:
-
             msg = 'Usuario/Contraseña Incorrecto!'
             return render_template('Login.html', msg=msg)
 
 @app.route("/GoDashboard")
 def GoDashboard():
-    return render_template("Dashboard.html")
+    if 'Nick' in session:
+        return render_template("Dashboard.html")
+    else:
+        return redirect(url_for('index'))
 
 @app.route("/GoPerfil")
 def GoPerfil():
-    return render_template("Perfil.html")
+    if 'Nick' in session:
+        return render_template("Perfil.html")
+    else:
+        return redirect(url_for('index'))
 
 @app.route("/GoMediciones")
 def GoMediciones():
-    mediciones = ((0, 0, 0), )
-    return render_template("Mediciones.html", mediciones=mediciones)
+    if 'Nick' in session:
+        mediciones = ((0, 0, 0),)
+        return render_template("Mediciones.html", mediciones=mediciones)
+    else:
+        return redirect(url_for('index'))
 
 @app.route("/AdminClients")
 def AdminClients():
-    clientes = conn.getAllClients()
-    return render_template("AdministrarClientes.html", clientes=clientes)
+    if 'Nick' in session:
+        clientes = conn.getAllClients()
+        return render_template("AdministrarClientes.html", clientes=clientes)
+    else:
+        return redirect(url_for('index'))
 
 @app.route("/AdminUsers")
 def AdminUsers():
-    users = conn.getAllUsers()
-    return render_template("AdministrarUsuarios.html", users=users)
+    if 'Nick' in session:
+        users = conn.getAllUsers(session['CodCli'])
+        return render_template("AdministrarUsuarios.html", users=users)
+    else:
+        return redirect(url_for('index'))
 
 @app.route("/AdminPlaces")
 def AdminPlaces():
-    places = conn.getAllSites()
-    return render_template("AdministrarSitios.html", places=places)
+    if 'Nick' in session:
+        places = conn.getAllSites(session['CodCli'])
+        return render_template("AdministrarSitios.html", places=places)
+    else:
+        return redirect(url_for('index'))
 
 @app.route("/AdminAnalizers")
 def AdminAnalizers():
-    analizers = conn.getAllAnalizers()
-    return render_template("AdministrarAnalizadores.html", analizers=analizers)
+    if 'Nick' in session:
+        analizers = conn.getAllAnalizers()
+        return render_template("AdministrarAnalizadores.html", analizers=analizers)
+    else:
+        return redirect(url_for('index'))
 
 @app.route("/AddClient")
 def AddClient():
-    return render_template("IngresarCliente.html")
+    if 'Nick' in session:
+        return render_template("IngresarCliente.html")
+    else:
+        return redirect(url_for('index'))
 
 @app.route("/AddUser")
 def AddUser():
-    return render_template("IngresarUsuario.html")
+    if 'Nick' in session:
+        return render_template("IngresarUsuario.html")
+    else:
+        return redirect(url_for('index'))
 
 @app.route("/AddPlace")
 def AddPlace():
-    return render_template("IngresarSitio.html")
+    if 'Nick' in session:
+        return render_template("IngresarSitio.html")
+    else:
+        return redirect(url_for('index'))
 
 @app.route("/AddAnalizer")
 def AddAnalizer():
-    return render_template("IngresarAnalizador.html")
+    if 'Nick' in session:
+        return render_template("IngresarAnalizador.html")
+    else:
+        return redirect(url_for('index'))
 
 @app.route("/SaveAddClient", methods=["POST"])
 def SaveAddClient():
@@ -84,14 +123,25 @@ def SaveAddClient():
     ciudad = request.form["ciudad"]
     estado = request.form["estado"]
     telefono = request.form["telefono"]
-    conn.addClient(conn.findMaxCodeClients(), nombre, 1, 1, direccion, ciudad, estado, telefono)
+    suscripcion = request.form.get("suscripcion")
+    pago = request.form.get("pago")
+    cliente = conn.findMaxCodeClients()
+    conn.addClient(cliente, nombre, suscripcion, pago, direccion, ciudad, estado, telefono)
+
+    nombre = request.form["nombreUsu"]
+    password = request.form["password"]
+    tipo = request.form.get("tipo")
+    correo = request.form["correo"]
+    nick = request.form["nick"]
+    conn.addUser(conn.findMaxCodeUsers(), nombre, password, tipo, correo, nick, cliente)
+
     return redirect("/AdminClients")
 
 @app.route("/SaveAddUser", methods=["POST"])
 def SaveAddUser():
     nombre = request.form["nombre"]
     password = request.form["password"]
-    tipo = request.form["tipo"]
+    tipo = request.form.get("tipo")
     correo = request.form["correo"]
     nick = request.form["nick"]
     cliente = request.form["cliente"]
@@ -110,10 +160,6 @@ def SaveAddPlace():
 def SaveAddAnalizer():
     fabricante = request.form["fabricante"]
     uso = request.form.get("uso")
-    if uso == None:
-        uso = 0
-    else:
-        uso = 1
     clase = request.form["clase"]
     conn.addAnalizer(conn.findMaxCodeAnalizer(), fabricante, uso, clase)
     return redirect("/AdminAnalizers")
@@ -166,8 +212,9 @@ def SaveUpdateClient():
     ciudad = request.form["ciudad"]
     estado = request.form["estado"]
     telefono = request.form["telefono"]
-
-    conn.updateClient(id, nombre, direccion, ciudad, estado, telefono)
+    suscripcion = request.form.get("suscripcion")
+    pago = request.form.get("pago")
+    conn.updateClient(id, nombre, direccion, ciudad, estado, telefono, suscripcion, pago)
     return redirect("/AdminClients")
 
 @app.route("/SaveUpdateUser", methods=["POST"])
@@ -196,11 +243,12 @@ def SaveUpdateAnalizer():
     id = request.form["id"]
     fabricante = request.form["fabricante"]
     uso = request.form.get("uso")
-    if uso == None:
-        uso = 0
-    else:
-        uso = 1
     clase = request.form["clase"]
 
     conn.updateAnalizer(id, fabricante, uso, clase)
     return redirect("/AdminAnalizers")
+
+@app.route("/Logout")
+def Logout():
+    session.clear()
+    return redirect(url_for('index'))

@@ -18,7 +18,13 @@
                 </tr>
                 <tr>
                     <td><label for="tipo">Tipo:</label></td>
-                    <td><input required type="text" class="input" placeholder="Tipo" name="tipo" id="tipo"></td>
+                    <td>
+                        <select name="tipo" id="tipo">
+                            <option value= "Usuario">Usuario</option>
+                            <option value= "Cliente">Cliente</option>
+                            {% if session['Cliente'] == "Admin" %}<option value= "Admin">Admin</option>{% endif %}
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <td><label for="correo">Correo:</label></td>
@@ -29,9 +35,12 @@
                     <td><input required type="text" class="input" placeholder="Nick" name="nick" id="nick"></td>
                 </tr>
                 <tr>
-                    <!--Este campo es diferente prob combo box conectado a cliente-->
+                    <!--Este campo es dinamico con el usuario que ingresa-->
                     <td><label for="cliente">Cliente:</label></td>
-                    <td><input required type="text" class="input" placeholder="Cliente" name="cliente" id="cliente" value="100000"></td>
+                    <td>
+                        {{ session['Cliente'] }}
+                        <input required type="hidden" class="input" placeholder="Cliente" name="cliente" id="cliente" value="{{ session['CodCli'] }}">
+                    </td>
                 </tr>
             </table>
                 <br>

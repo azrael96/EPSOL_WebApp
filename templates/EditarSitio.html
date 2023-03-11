@@ -18,9 +18,11 @@
                     <td><input required type="text" class="input" placeholder="Ubicación" name="ubicación" id="ubicación" value="{{place[2]}}"></td>
                 </tr>
                 <tr>
-                    <!--Este campo es diferente prob combo box conectado a cliente-->
                     <td><label for="cliente">Cliente:</label></td>
-                    <td><input required type="text" class="input" placeholder="Cliente" name="cliente" id="cliente" value="{{place[3]}}"></td>
+                    <td>
+                        {{ session['Cliente'] }}
+                        <input required type="hidden" class="input" placeholder="Cliente" name="cliente" id="cliente" value="{{place[3]}}">
+                    </td>
                 </tr>
             </table>
                 <br>

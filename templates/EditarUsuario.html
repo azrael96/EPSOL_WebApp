@@ -19,7 +19,13 @@
                 </tr>
                 <tr>
                     <td><label for="tipo">Tipo:</label></td>
-                    <td><input required type="text" class="input" placeholder="Tipo" name="tipo" id="tipo" value="{{user[3]}}"></td>
+                    <td>
+                        <select name="tipo" id="tipo">
+                            <option value= "Usuario" {% if user[3] == "Usuario" %} SELECTED {% endif %}>Usuario</option>"
+                            <option value= "Cliente" {% if user[3] == "Cliente" %} SELECTED {% endif %}>Cliente</option>"
+                            {% if user[3] == "Admin" %}<option value= "Admin"  SELECTED >Admin</option>{% endif %}
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <td><label for="correo">Correo:</label></td>
@@ -30,9 +36,11 @@
                     <td><input required type="text" class="input" placeholder="Nick" name="nick" id="nick" value="{{user[6]}}"></td>
                 </tr>
                 <tr>
-                    <!--Este campo es diferente prob combo box conectado a cliente-->
                     <td><label for="cliente">Cliente:</label></td>
-                    <td><input required type="text" class="input" placeholder="Cliente" name="cliente" id="cliente" value="{{user[5]}}"></td>
+                    <td>
+                        {{user[5]}}
+                        <input required type="hidden" class="input" placeholder="Cliente" name="cliente" id="cliente" value="{{user[5]}}">
+                    </td>
                 </tr>
             </table>
                 <br>

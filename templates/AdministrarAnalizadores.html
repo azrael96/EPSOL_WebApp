@@ -5,8 +5,10 @@
     <div class="content">
         <h2>Analizadores</h2>
         <div>
+            {% if session['Tipo'] == 'Admin' %}
             <a class="button is-green" href="{{url_for('AddAnalizer')}}" >Agregar Analizador</a>
             <br><br>
+            {% endif %}
             <table>
                 <thead>
                     <tr>
@@ -19,8 +21,15 @@
                     {% for ana in analizers %}
                     <tr>
                         <td>{{ana[1]}}</td>
-                        <td>{{ana[2]}}</td>
+                        <td>
+                            {% if ana[2] == 1 %}
+                            Activado
+                            {% elif ana[2] == 0 %}
+                            Inactivado
+                            {% endif %}
+                        </td>
                         <td>{{ana[3]}}</td>
+                        {% if session['Tipo'] == 'Admin' %}
                         <td>
                             <a href="{{url_for('UpdateAnalizer', id=ana[0])}}" class="button is-blue">Editar</a>
                         </td>
@@ -30,6 +39,7 @@
                                 <button class="button is-red">Eliminar</button>
                             </form>
                         </td>
+                        {% endif %}
                     </tr>
                     {% endfor %}
                 </tbody>

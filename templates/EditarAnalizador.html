@@ -15,7 +15,12 @@
                 </tr>
                 <tr>
                     <td><label for="uso">Uso:</label></td>
-                    <td><input type="checkbox" class="input" placeholder="Uso" name="uso" id="uso" value="{{analizer[2]}}"></td>
+                    <td>
+                        <select name="uso" id="uso">
+                            <option value= "1" {% if analizer[2] == 1 %} SELECTED {% endif %}>Activado</option>"
+                            <option value= "0" {% if analizer[2] == 0 %} SELECTED {% endif %}>Inactivado</option>"
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <td><label for="clase">Clase:</label></td>

@@ -50,20 +50,20 @@ def findMaxCodeAnalizer():
         return int(cod[0]) + 1
 
 def getAllClients():
-    query ="SELECT * FROM clients"
+    query ="SELECT * FROM clients WHERE client_ID != 100000"
     cursor.execute(query)
     clientsInfo = cursor.fetchall()
     return clientsInfo
 
-def getAllUsers():
-    query ="SELECT * FROM users"
-    cursor.execute(query)
+def getAllUsers(cod):
+    query ="SELECT * FROM users WHERE user_client = %s AND user_ID != 200000"
+    cursor.execute(query, (cod,))
     usersInfo = cursor.fetchall()
     return usersInfo
 
-def getAllSites():
-    query ="SELECT * FROM sites"
-    cursor.execute(query)
+def getAllSites(cod):
+    query ="SELECT * FROM sites WHERE site_client = %s"
+    cursor.execute(query, (cod,))
     sitesInfo = cursor.fetchall()
     return sitesInfo
 
@@ -121,9 +121,9 @@ def addAnalizer(Cod, Fab, Use, Cla):
     cursor.execute(query, data)
     conn.commit()
 
-def updateClient(Cod, Nom, Dir, Ciu, Est, Tel):
-    query ="UPDATE clients SET client_name = %s, client_address = %s, client_city = %s, client_state = %s, client_phone = %s WHERE client_ID = %s"
-    cursor.execute(query, (Nom, Dir, Ciu, Est, Tel, Cod))
+def updateClient(Cod, Nom, Dir, Ciu, Est, Tel, Sus, Pay):
+    query ="UPDATE clients SET client_name = %s, client_address = %s, client_city = %s, client_state = %s, client_phone = %s, subscription_flag = %s, payment_flag = %s WHERE client_ID = %s"
+    cursor.execute(query, (Nom, Dir, Ciu, Est, Tel, Sus, Pay, Cod))
     conn.commit()
 
 def updateUser(Cod, Nom, Pas, Tip, Cor, Nic):
@@ -162,7 +162,12 @@ def delAnalizer(cod):
     conn.commit()
 
 def searchLogin(username, password):
-    query ="SELECT user_ID, user_name FROM users WHERE user_name = %s AND user_pass = %s"
+    query ="SELECT user_name, user_type, email, nick, user_client FROM users WHERE nick = %s AND user_pass = %s"
     cursor.execute(query, (username, password))
     userInfo = cursor.fetchone()
+    if userInfo != None:
+        query = "SELECT client_name, client_ID FROM clients WHERE client_ID = %s"
+        cursor.execute(query, (userInfo[4],))
+        clientInfo = cursor.fetchone()
+        userInfo += clientInfo
     return userInfo

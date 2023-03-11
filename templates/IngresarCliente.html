@@ -5,30 +5,76 @@
     <div class="content">
         <h2>Agregar Cliente</h2>
         <div>
-            <p>Ingrese los datos del cliente nuevo:</p>
+
             <form action="{{url_for('SaveAddClient')}}" method="post">
-            <table>
-                <tr>
-                    <td><label for="nombre">Nombre:</label></td>
-                    <td><input required type="text" class="input" placeholder="Nombre" name="nombre" id="nombre"></td>
-                </tr>
-                <tr>
-                    <td><label for="direccion">Dirección:</label></td>
-                    <td><input required type="text" class="input" placeholder="Dirección" name="direccion" id="direccion"></td>
-                </tr>
-                <tr>
-                    <td><label for="ciudad">Ciudad:</label></td>
-                    <td><input required type="text" class="input" placeholder="Ciudad" name="ciudad" id="ciudad"></td>
-                </tr>
-                <tr>
-                    <td><label for="estado">Estado:</label></td>
-                    <td><input required type="text" class="input" placeholder="Estado" name="estado" id="estado"></td>
-                </tr>
-                <tr>
-                    <td><label for="telefono">Teléfono</label></td>
-                    <td><input required type="number" class="input" placeholder="Teléfono" name="telefono" id="telefono"></td>
-                </tr>
-            </table>
+                <p>Ingrese los datos del cliente nuevo:</p>
+                <table>
+                    <tr>
+                        <td><label for="nombre">Cliente:</label></td>
+                        <td><input required type="text" class="input" placeholder="Nombre" name="nombre" id="nombre"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="direccion">Dirección:</label></td>
+                        <td><input required type="text" class="input" placeholder="Dirección" name="direccion" id="direccion"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="ciudad">Ciudad:</label></td>
+                        <td><input required type="text" class="input" placeholder="Ciudad" name="ciudad" id="ciudad"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="estado">Estado:</label></td>
+                        <td><input required type="text" class="input" placeholder="Estado" name="estado" id="estado"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="telefono">Teléfono</label></td>
+                        <td><input required type="number" class="input" placeholder="Teléfono" name="telefono" id="telefono"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="suscripcion">Suscripcion</label></td>
+                        <td>
+                            <select name="suscripcion" id="suscripcion">
+                                <option value= "1" SELECTED>Activa</option>"
+                                <option value= "0">Inactiva</option>"
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="pago">Pago</label></td>
+                        <td>
+                            <select name="pago" id="pago">
+                                <option value= "1" SELECTED>Realizado</option>"
+                                <option value= "0">Pendiente</option>"
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+                <p>Ingrese los datos del usuario nuevo:</p>
+                <table>
+                    <tr>
+                        <td><label for="nombreUsu">Usuario:</label></td>
+                        <td><input required type="text" class="input" placeholder="Nombre" name="nombreUsu" id="nombreUsu"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="password">Contraseña:</label></td>
+                        <td><input required type="text" class="input" placeholder="Contraseña" name="password" id="password"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="tipo">Tipo:</label></td>
+                        <td>
+                            <select name="tipo" id="tipo">
+                                <option value= "Cliente">Cliente</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="correo">Correo:</label></td>
+                        <td><input required type="text" class="input" placeholder="Correo" name="correo" id="correo"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="nick">Nick:</label></td>
+                        <td><input required type="text" class="input" placeholder="Nick" name="nick" id="nick"></td>
+                    </tr>
+                </table>
                 <br>
                 <button type="submit" class="button is-green">Guardar</button>
                 <a href="{{url_for('AdminClients')}}" class="button is-base">Volver</a>

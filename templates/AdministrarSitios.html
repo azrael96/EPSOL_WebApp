@@ -5,14 +5,16 @@
     <div class="content">
         <h2>Sitios</h2>
         <div>
+            {% if session['Tipo'] == 'Cliente' %}
             <a class="button is-green" href="{{url_for('AddPlace')}}" >Agregar Sitio</a>
             <br><br>
+            {% endif %}
             <table>
                 <thead>
                     <tr>
                         <th>Nombre</th>
                         <th>Ubicación</th>
-                        <th>Cliente</th>
+                        {% if session['Tipo'] == 'Admin' %}<th>Cliente</th>{% endif %}
                     </tr>
                 </thead>
                 <tbody>
@@ -20,7 +22,8 @@
                     <tr>
                         <td>{{pla[1]}}</td>
                         <td>{{pla[2]}}</td>
-                        <td>{{pla[3]}}</td>
+                        {% if session['Tipo'] == 'Admin' %}<td>{{pla[3]}}</td>{% endif %}
+                        {% if session['Tipo'] == 'Cliente' %}
                         <td>
                             <a href="{{url_for('UpdatePlace', id=pla[0])}}" class="button is-blue">Editar</a>
                         </td>
@@ -30,6 +33,7 @@
                                 <button class="button is-red">Eliminar</button>
                             </form>
                         </td>
+                        {% endif %}
                     </tr>
                     {% endfor %}
                 </tbody>

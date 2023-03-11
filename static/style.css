@@ -166,6 +166,9 @@ body {
 }
 
 /* buttons configs */
+.moreWidth{
+    width: 20em;
+}
 .button {
     -webkit-appearance: none;
     align-items: center;
@@ -185,7 +188,7 @@ body {
     vertical-align: top
     margin: 0;
     background-color: white;
-    color: var(--pixie-cyan);
+    color: var(black);
     cursor: pointer;
     justify-content: center;
     padding-bottom: calc(.5em - 1px);
@@ -251,3 +254,4 @@ body {
     border-color: transparent;
     color: white;
 }
+
