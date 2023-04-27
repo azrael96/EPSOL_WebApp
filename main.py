@@ -1,8 +1,11 @@
-from flask import Flask, render_template, request, redirect, session, url_for
-import connect as conn
+from flask import Flask, render_template, request, redirect, session, url_for, make_response
+
+from connect import DatabaseLink
+import templates.graphs as graphs
 
 app = Flask(__name__)
 app.secret_key = '5e20e862a2afa65e8189e348cdfe7579c11a2e83'
+conn = DatabaseLink()
 
 if "__name__" == "__main__":
     app.run(debug=True)
@@ -51,10 +54,15 @@ def GoPerfil():
 @app.route("/GoMediciones")
 def GoMediciones():
     if 'Nick' in session:
-        mediciones = ((0, 0, 0),)
-        return render_template("Mediciones.html", mediciones=mediciones)
+        return render_template("Mediciones.html")
     else:
         return redirect(url_for('index'))
+
+@app.route('/data')
+def data():
+    resp = make_response(graphs.giveGraph())
+    resp.mimetype = 'application/json'
+    return resp
 
 @app.route("/AdminClients")
 def AdminClients():

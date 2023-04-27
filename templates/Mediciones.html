@@ -2,30 +2,25 @@
 {% block titulo %} Mediciones {% endblock %}
 {% block contenido %}
 
-    <div class="content">
-        <h2>Mediciones</h2>
-        {% if session['Tipo'] != 'Admin' %}
-        <div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Potencia</th>
-                        <th>THD</th>
-                        <th>Otras</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for med in mediciones %}
-                    <tr>
-                        <td>{{med[0]}}</td>
-                        <td>{{med[1]}}</td>
-                        <td>{{med[2]}}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        {% endif %}
-    </div>
+    {% if session['Tipo'] != 'Admin' %}
 
+    <h2>Mediciones</h2>
+    <h1 align="center">Candlestick Chart With Technical Analysis</h1>
+
+    <div id="chart" class="chart"></div>
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script type="text/javascript">
+      (() => {
+        const update = () => {
+          fetch('/data')
+            .then(resp => resp.json())
+            .then(data => Plotly.react('chart', data, {}));
+        };
+        update();
+        setInterval(update, 5000);
+      })();
+    </script>
+
+    {% endif %}
 {% endblock %}

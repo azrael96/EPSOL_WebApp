@@ -21,9 +21,11 @@
                     <td><label for="tipo">Tipo:</label></td>
                     <td>
                         <select name="tipo" id="tipo">
-                            <option value= "Usuario" {% if user[3] == "Usuario" %} SELECTED {% endif %}>Usuario</option>"
-                            <option value= "Cliente" {% if user[3] == "Cliente" %} SELECTED {% endif %}>Cliente</option>"
-                            {% if user[3] == "Admin" %}<option value= "Admin"  SELECTED >Admin</option>{% endif %}
+                            {% if session['Tipo'] != "Admin" %}
+                            <option value= "Usuario" {% if user[3] == "Usuario" %} SELECTED {% endif %}>Usuario</option>
+                            <option value= "Cliente" {% if user[3] == "Cliente" %} SELECTED {% endif %}>Cliente</option>
+                            {% endif %}
+                            {% if session['Tipo'] == "Admin" %}<option value= "Admin"  SELECTED >Admin</option>{% endif %}
                         </select>
                     </td>
                 </tr>

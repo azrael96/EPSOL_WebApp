@@ -6,10 +6,8 @@
         <h2>Usuarios</h2>
         <div>
             {% if session['Tipo'] != 'Usuario' %}
-            {% if session['Tipo'] == 'Cliente' %}
             <a class="button is-green" href="{{url_for('AddUser')}}" >Agregar Usuario</a>
             <br><br>
-            {% endif %}
             <table>
                 <thead>
                     <tr>
@@ -30,7 +28,7 @@
                         <td>{{use[4]}}</td>
                         <td>{{use[6]}}</td>
                         {% if session['Tipo'] == 'Admin' %}<td>{{use[5]}}</td>{% endif %}
-                        {% if session['Tipo'] == 'Cliente' %}
+                        {% if session['Tipo'] != 'Usuario' %}
                         <td>
                             <a href="{{url_for('UpdateUser', id=use[0])}}" class="button is-blue">Editar</a>
                         </td>
