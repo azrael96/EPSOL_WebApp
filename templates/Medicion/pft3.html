@@ -1,0 +1,26 @@
+{% extends "main.html" %}
+{% block titulo %} Mediciones {% endblock %}
+{% block contenido %}
+
+    {% if current_user.user_type != 'Admin' %}
+
+    <h2>Datos</h2>
+    <h1 align="center">pft3 data</h1>
+
+    <div id="chart" class="chart"></div>
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script type="text/javascript">
+      (() => {
+        const update = () => {
+          fetch('/pft3')
+            .then(resp => resp.json())
+            .then(pft3 => Plotly.react('chart', pft3, {}));
+        };
+        update();
+        setInterval(update, 5000);
+      })();
+    </script>
+
+    {% endif %}
+{% endblock %}

@@ -1,262 +1,66 @@
-from flask import Flask, render_template, request, redirect, session, url_for, make_response
+#Import the necessary libraries
+from flask import Flask
+from flask_bcrypt import Bcrypt
+from flask_login import LoginManager
+from flask_sqlalchemy import SQLAlchemy
 
-from connect import DatabaseLink
-import templates.graphs as graphs
+#Conect with the necessary internal components
+from blueprints.Panel import panelRutas
+from blueprints.Cliente import clienteRutas
+from blueprints.Medicion import medicionRutas
+from blueprints.Medidor import medidorRutas
+from blueprints.Sitio import sitioRutas
+from blueprints.Usuario import usuarioRutas
+from models.Cliente import clienteModel
+from models.Medidor import medidorModel
+from models.Sitio import sitioModel
+from models.Dato import datoModel
+from models.Usuario import Users, usuarioModel
+from models.Connector import connection_string
 
+#Initialize principal app
 app = Flask(__name__)
 app.secret_key = '5e20e862a2afa65e8189e348cdfe7579c11a2e83'
-conn = DatabaseLink()
+app.config["SQLALCHEMY_DATABASE_URI"] = connection_string
 
+#Define the main components of the app
+login_manager = LoginManager()
+bcrypt = Bcrypt()
+db = SQLAlchemy()
+
+#Initialize the main components of the app
+login_manager.init_app(app)
+bcrypt.init_app(app)
+db.init_app(app)
+
+#Import the routes to the app
+app.register_blueprint(panelRutas)
+app.register_blueprint(clienteRutas)
+app.register_blueprint(usuarioRutas)
+app.register_blueprint(sitioRutas)
+app.register_blueprint(medidorRutas)
+app.register_blueprint(medicionRutas)
+
+#generate the models to be used
+app.config["usuarioModel"] = usuarioModel(db)
+app.config["sitioModel"] = sitioModel(db)
+app.config["medidorModel"] = medidorModel(db)
+app.config["clienteModel"] = clienteModel(db)
+app.config["datoModel"] = datoModel(db)
+app.config["bcrypt"] = bcrypt
+
+#test enviorment
+'''
+with app.app_context():
+    datoModel = datoModel(db)
+    print(datoModel.getThdpromData(9000))
+    print(datoModel.getPowerFactorData(9000))
+'''
+
+#Start the app
 if "__name__" == "__main__":
     app.run(debug=True)
 
-@app.route('/')
-def index():
-    if 'Nick' in session:
-        return redirect(url_for('GoDashboard'))
-    else:
-        return render_template('Login.html')
-
-@app.route('/Login', methods=['GET', 'POST'])
-def Login():
-    msg = ''
-    if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
-        username = request.form['username']
-        password = request.form['password']
-        account = conn.searchLogin(username, password)
-        if account:
-            session['Nombre'] = account[0]
-            session['Nick'] = account[3]
-            session['Estado'] = 'En Linea'
-            session['Tipo'] = account[1]
-            session['Correo'] = account[2]
-            session['Cliente'] = account[5]
-            session['CodCli'] = account[6]
-            return redirect(url_for('GoDashboard'))
-        else:
-            msg = 'Usuario/Contraseña Incorrecto!'
-            return render_template('Login.html', msg=msg)
-
-@app.route("/GoDashboard")
-def GoDashboard():
-    if 'Nick' in session:
-        return render_template("Dashboard.html")
-    else:
-        return redirect(url_for('index'))
-
-@app.route("/GoPerfil")
-def GoPerfil():
-    if 'Nick' in session:
-        return render_template("Perfil.html")
-    else:
-        return redirect(url_for('index'))
-
-@app.route("/GoMediciones")
-def GoMediciones():
-    if 'Nick' in session:
-        return render_template("Mediciones.html")
-    else:
-        return redirect(url_for('index'))
-
-@app.route('/data')
-def data():
-    resp = make_response(graphs.giveGraph())
-    resp.mimetype = 'application/json'
-    return resp
-
-@app.route("/AdminClients")
-def AdminClients():
-    if 'Nick' in session:
-        clientes = conn.getAllClients()
-        return render_template("AdministrarClientes.html", clientes=clientes)
-    else:
-        return redirect(url_for('index'))
-
-@app.route("/AdminUsers")
-def AdminUsers():
-    if 'Nick' in session:
-        users = conn.getAllUsers(session['CodCli'])
-        return render_template("AdministrarUsuarios.html", users=users)
-    else:
-        return redirect(url_for('index'))
-
-@app.route("/AdminPlaces")
-def AdminPlaces():
-    if 'Nick' in session:
-        places = conn.getAllSites(session['CodCli'])
-        return render_template("AdministrarSitios.html", places=places)
-    else:
-        return redirect(url_for('index'))
-
-@app.route("/AdminAnalizers")
-def AdminAnalizers():
-    if 'Nick' in session:
-        analizers = conn.getAllAnalizers()
-        return render_template("AdministrarAnalizadores.html", analizers=analizers)
-    else:
-        return redirect(url_for('index'))
-
-@app.route("/AddClient")
-def AddClient():
-    if 'Nick' in session:
-        return render_template("IngresarCliente.html")
-    else:
-        return redirect(url_for('index'))
-
-@app.route("/AddUser")
-def AddUser():
-    if 'Nick' in session:
-        return render_template("IngresarUsuario.html")
-    else:
-        return redirect(url_for('index'))
-
-@app.route("/AddPlace")
-def AddPlace():
-    if 'Nick' in session:
-        return render_template("IngresarSitio.html")
-    else:
-        return redirect(url_for('index'))
-
-@app.route("/AddAnalizer")
-def AddAnalizer():
-    if 'Nick' in session:
-        return render_template("IngresarAnalizador.html")
-    else:
-        return redirect(url_for('index'))
-
-@app.route("/SaveAddClient", methods=["POST"])
-def SaveAddClient():
-    nombre = request.form["nombre"]
-    direccion = request.form["direccion"]
-    ciudad = request.form["ciudad"]
-    estado = request.form["estado"]
-    telefono = request.form["telefono"]
-    suscripcion = request.form.get("suscripcion")
-    pago = request.form.get("pago")
-    cliente = conn.findMaxCodeClients()
-    conn.addClient(cliente, nombre, suscripcion, pago, direccion, ciudad, estado, telefono)
-
-    nombre = request.form["nombreUsu"]
-    password = request.form["password"]
-    tipo = request.form.get("tipo")
-    correo = request.form["correo"]
-    nick = request.form["nick"]
-    conn.addUser(conn.findMaxCodeUsers(), nombre, password, tipo, correo, nick, cliente)
-
-    return redirect("/AdminClients")
-
-@app.route("/SaveAddUser", methods=["POST"])
-def SaveAddUser():
-    nombre = request.form["nombre"]
-    password = request.form["password"]
-    tipo = request.form.get("tipo")
-    correo = request.form["correo"]
-    nick = request.form["nick"]
-    cliente = request.form["cliente"]
-    conn.addUser(conn.findMaxCodeUsers(), nombre, password, tipo, correo, nick, cliente)
-    return redirect("/AdminUsers")
-
-@app.route("/SaveAddPlace", methods=["POST"])
-def SaveAddPlace():
-    nombre = request.form["nombre"]
-    ubicación = request.form["ubicación"]
-    cliente = request.form["cliente"]
-    conn.addPlace(conn.findMaxCodePlaces(), nombre, ubicación, cliente)
-    return redirect("/AdminPlaces")
-
-@app.route("/SaveAddAnalizer", methods=["POST"])
-def SaveAddAnalizer():
-    fabricante = request.form["fabricante"]
-    uso = request.form.get("uso")
-    clase = request.form["clase"]
-    conn.addAnalizer(conn.findMaxCodeAnalizer(), fabricante, uso, clase)
-    return redirect("/AdminAnalizers")
-
-@app.route("/DelClient", methods=["POST"])
-def DelClient():
-    conn.delClient(request.form["id"])
-    return redirect("/AdminClients")
-
-@app.route("/DelUser", methods=["POST"])
-def DelUser():
-    conn.delUser(request.form["id"])
-    return redirect("/AdminUsers")
-
-@app.route("/DelPlace", methods=["POST"])
-def DelPlace():
-    conn.delPlace(request.form["id"])
-    return redirect("/AdminPlaces")
-
-@app.route("/DelAnalizer", methods=["POST"])
-def DelAnalizer():
-    conn.delAnalizer(request.form["id"])
-    return redirect("/AdminAnalizers")
-
-@app.route("/UpdateClient/<int:id>")
-def UpdateClient(id):
-    client = conn.searchClient(id)
-    return render_template("EditarCliente.html", client=client)
-
-@app.route("/UpdateUser/<int:id>")
-def UpdateUser(id):
-    user = conn.searchUser(id)
-    return render_template("EditarUsuario.html", user=user)
-
-@app.route("/UpdatePlace/<int:id>")
-def UpdatePlace(id):
-    place = conn.searchPlace(id)
-    return render_template("EditarSitio.html", place=place)
-
-@app.route("/UpdateAnalizer/<int:id>")
-def UpdateAnalizer(id):
-    analizer = conn.searchAnalizer(id)
-    return render_template("EditarAnalizador.html", analizer=analizer)
-
-@app.route("/SaveUpdateClient", methods=["POST"])
-def SaveUpdateClient():
-    id = request.form["id"]
-    nombre = request.form["nombre"]
-    direccion = request.form["direccion"]
-    ciudad = request.form["ciudad"]
-    estado = request.form["estado"]
-    telefono = request.form["telefono"]
-    suscripcion = request.form.get("suscripcion")
-    pago = request.form.get("pago")
-    conn.updateClient(id, nombre, direccion, ciudad, estado, telefono, suscripcion, pago)
-    return redirect("/AdminClients")
-
-@app.route("/SaveUpdateUser", methods=["POST"])
-def SaveUpdateUser():
-    id = request.form["id"]
-    nombre = request.form["nombre"]
-    password = request.form["password"]
-    tipo = request.form["tipo"]
-    correo = request.form["correo"]
-    nick = request.form["nick"]
-
-    conn.updateUser(id, nombre, password, tipo, correo, nick)
-    return redirect("/AdminUsers")
-
-@app.route("/SaveUpdatePlace", methods=["POST"])
-def SaveUpdatePlace():
-    id = request.form["id"]
-    nombre = request.form["nombre"]
-    ubicación = request.form["ubicación"]
-
-    conn.updatePlace(id, nombre, ubicación)
-    return redirect("/AdminPlaces")
-
-@app.route("/SaveUpdateAnalizer", methods=["POST"])
-def SaveUpdateAnalizer():
-    id = request.form["id"]
-    fabricante = request.form["fabricante"]
-    uso = request.form.get("uso")
-    clase = request.form["clase"]
-
-    conn.updateAnalizer(id, fabricante, uso, clase)
-    return redirect("/AdminAnalizers")
-
-@app.route("/Logout")
-def Logout():
-    session.clear()
-    return redirect(url_for('index'))
+@login_manager.user_loader
+def load_user(user_id):
+    return db.session.query(Users).get(int(user_id))

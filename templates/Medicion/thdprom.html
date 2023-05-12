@@ -2,10 +2,10 @@
 {% block titulo %} Mediciones {% endblock %}
 {% block contenido %}
 
-    {% if session['Tipo'] != 'Admin' %}
+    {% if current_user.user_type != 'Admin' %}
 
-    <h2>Mediciones</h2>
-    <h1 align="center">Candlestick Chart With Technical Analysis</h1>
+    <h2>Datos</h2>
+    <h1 align="center">thdprom data</h1>
 
     <div id="chart" class="chart"></div>
 
@@ -13,9 +13,9 @@
     <script type="text/javascript">
       (() => {
         const update = () => {
-          fetch('/data')
+          fetch('/thdprom')
             .then(resp => resp.json())
-            .then(data => Plotly.react('chart', data, {}));
+            .then(thdprom => Plotly.react('chart', thdprom, {}));
         };
         update();
         setInterval(update, 5000);

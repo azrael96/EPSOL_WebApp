@@ -5,8 +5,8 @@
     <div class="content">
         <h2>Clientes</h2>
         <div>
-            {% if session['Tipo'] == 'Admin' %}
-            <a class="button is-green" href="{{url_for('AddClient')}}" >Agregar Cliente</a>
+            {% if current_user.user_type == 'Admin' %}
+            <a class="button is-green" href="{{url_for('clienteRutas.AddClient')}}" >Agregar Cliente</a>
             <br><br>
             <table>
                 <thead>
@@ -46,10 +46,10 @@
                             {% endif %}
                         </td>
                         <td>
-                            <a href="{{url_for('UpdateClient', id=cli[0])}}" class="button is-blue">Editar</a>
+                            <a href="{{url_for('clienteRutas.UpdateClient', id=cli[0])}}" class="button is-blue">Editar</a>
                         </td>
                         <td>
-                            <form action="{{url_for('DelClient')}}" method="POST">
+                            <form action="{{url_for('clienteRutas.DelClient')}}" method="POST">
                                 <input type="hidden" name="id" value="{{cli[0]}}">
                                 <button class="button is-red">Eliminar</button>
                             </form>

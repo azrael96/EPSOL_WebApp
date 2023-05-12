@@ -1,3 +1,6 @@
+drop database EPSOL_BD;
+COMMIT;
+
 CREATE DATABASE EPSOL_BD;
 COMMIT;
 
@@ -19,7 +22,7 @@ ALTER TABLE `clients` ADD PRIMARY KEY (`client_ID`);
 CREATE TABLE users (
     `user_ID` int NOT NULL,
     `user_name` varchar(50) NOT NULL,
-    `user_pass` varchar(40) NOT NULL,
+    `user_pass` VARBINARY(72) NOT NULL,
     `user_type` varchar(50) NOT NULL,
     `email` varchar(50) NOT NULL,
     `user_client` int NOT NULL,
@@ -55,27 +58,17 @@ ALTER TABLE `mesTables` ADD FOREIGN KEY (`meas_site`) REFERENCES sites(site_ID);
 ALTER TABLE `mesTables` ADD FOREIGN KEY (`meas_analizer`) REFERENCES analizers(analizer_ID);
 
 CREATE TABLE measurements ( 
-    `timestamp` int NOT NULL, /* probably wrong type (datetime)*/
-    `powerFactor` varchar(50) NOT NULL,
-    `thd` varchar(50) NOT NULL, /* theres more to add*/
+    `timestamp` int NOT NULL,
+    `powerFactor` DECIMAL(10, 9) NOT NULL,
+    `thd` DECIMAL(10, 9) NOT NULL, /* theres more to add*/
     `measure_meas` int NOT NULL
 );
 ALTER TABLE `measurements` ADD PRIMARY KEY (`timestamp`);
 ALTER TABLE `measurements` ADD FOREIGN KEY (`measure_meas`) REFERENCES mesTables(meas_ID);
 
-/* This table could not be necessary */
-CREATE TABLE dates (
-    `date_ID` int NOT NULL,
-    `begin_date` date NOT NULL,
-    `end_date` date NOT NULL,
-    `date_meas` int NOT NULL
-);
-ALTER TABLE `dates` ADD PRIMARY KEY (`date_ID`);
-ALTER TABLE `dates` ADD FOREIGN KEY (`date_meas`) REFERENCES mesTables(meas_ID);
-
 COMMIT;
 
 INSERT INTO clients VALUES (100000, 'EPSOL', 1, 1, 'dir', 'ciudad', 'estado', 'tel');
-INSERT INTO users VALUES (200000, 'ADMIN_EPSOL', 'password', 'ADMIN', 'email@', 100000, 'nick');
+INSERT INTO users VALUES (200000, 'ADMIN_EPSOL', '$2b$12$kjPPb2N/VrrZmQtz461SjOjJAZnzwhQIr2P7N6GP8OV5eIM9QZeXu', 'Admin', 'email@', 100000, 'nick');
 
 COMMIT;

@@ -5,35 +5,33 @@
     <div class="content">
         <h2>Usuarios</h2>
         <div>
-            {% if session['Tipo'] != 'Usuario' %}
-            <a class="button is-green" href="{{url_for('AddUser')}}" >Agregar Usuario</a>
+            {% if current_user.user_type != 'Usuario' %}
+            <a class="button is-green" href="{{url_for('usuarioRutas.AddUser')}}" >Agregar Usuario</a>
             <br><br>
             <table>
                 <thead>
                     <tr>
                         <th>Nombre</th>
-                        <th>Contraseña</th>
                         <th>Tipo</th>
                         <th>Correo</th>
                         <th>Nick</th>
-                        {% if session['Tipo'] == 'Admin' %}<th>Client</th>{% endif %}
+                        {% if current_user.user_type == 'Admin' %}<th>Client</th>{% endif %}
                     </tr>
                 </thead>
                 <tbody>
                     {% for use in users %}
                     <tr>
                         <td>{{use[1]}}</td>
-                        <td>{{use[2]}}</td>
                         <td>{{use[3]}}</td>
                         <td>{{use[4]}}</td>
                         <td>{{use[6]}}</td>
-                        {% if session['Tipo'] == 'Admin' %}<td>{{use[5]}}</td>{% endif %}
-                        {% if session['Tipo'] != 'Usuario' %}
+                        {% if current_user.user_type == 'Admin' %}<td>{{use[5]}}</td>{% endif %}
+                        {% if current_user.user_type != 'Usuario' %}
                         <td>
-                            <a href="{{url_for('UpdateUser', id=use[0])}}" class="button is-blue">Editar</a>
+                            <a href="{{url_for('usuarioRutas.UpdateUser', id=use[0])}}" class="button is-blue">Editar</a>
                         </td>
                         <td>
-                            <form action="{{url_for('DelUser')}}" method="POST">
+                            <form action="{{url_for('usuarioRutas.DelUser')}}" method="POST">
                                 <input type="hidden" name="id" value="{{use[0]}}">
                                 <button class="button is-red">Eliminar</button>
                             </form>

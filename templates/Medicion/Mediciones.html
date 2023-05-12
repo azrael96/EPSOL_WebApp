@@ -1,0 +1,26 @@
+{% extends "main.html" %}
+{% block titulo %} Mediciones {% endblock %}
+{% block contenido %}
+
+<div class="content">
+    <h2>Panel de Servicios</h2>
+    <div>
+        <p>Servicios disponibles para su rol:</p>
+        <table>
+            {% if current_user.user_type != 'Admin' %}
+            <tr><td>
+                <form action="{{ url_for('medicionRutas.Gothdprom') }}">
+                    <button class="button moreWidth">thdprom</button>
+                </form>
+            </td></tr>
+            <tr><td>
+                <form action="{{ url_for('medicionRutas.Gopft3') }}">
+                    <button class="button moreWidth">pft3</button>
+                </form>
+            </td></tr>
+            {% endif %}
+        </table>
+    </div>
+</div>
+
+{% endblock %}

@@ -6,7 +6,7 @@
         <h2>Editar Analizador</h2>
         <div>
             <p>Edite los datos del Analizador:</p>
-            <form action="{{url_for('SaveUpdateAnalizer')}}" method="post">
+            <form action="{{url_for('medidorRutas.SaveUpdateAnalizer')}}" method="post">
             <table>
                 <input type="hidden" name="id" value="{{analizer[0]}}">
                 <tr>
@@ -29,7 +29,7 @@
             </table>
                 <br>
                 <button type="submit" class="button is-green">Guardar</button>
-                <a href="{{url_for('AdminAnalizers')}}" class="button is-base">Volver</a>
+                <a href="{{url_for('medidorRutas.AdminAnalizers')}}" class="button is-base">Volver</a>
             </form>
         </div>
     </div>

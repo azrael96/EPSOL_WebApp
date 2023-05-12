@@ -9,27 +9,27 @@
         <table>
             <tr>
                 <td>Nombre:</td>
-                <td>{{ session['Nombre'] }}</td>
+                <td>{{ current_user.user_name }}</td>
             </tr>
             <tr>
                 <td>Nick:</td>
-                <td>{{ session['Nick'] }}</td>
+                <td>{{ current_user.nick }}</td>
             </tr>
             <tr>
                 <td>Estado:</td>
-                <td>{{ session['Estado'] }}</td>
+                <td> En Linea</td>
             </tr>
             <tr>
                 <td>Tipo de Usuario:</td>
-                <td>{{ session['Tipo'] }}</td>
+                <td>{{ current_user.user_type }}</td>
             </tr>
             <tr>
                 <td>Correo:</td>
-                <td>{{ session['Correo'] }}</td>
+                <td>{{ current_user.email }}</td>
             </tr>
             <tr>
                 <td>Cliente:</td>
-                <td>{{ session['Cliente'] }}</td>
+                <td>{{ current_user.cliente.client_name }}</td>
             </tr>
         </table>
     </div>

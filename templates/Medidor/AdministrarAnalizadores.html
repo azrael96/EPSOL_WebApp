@@ -5,8 +5,8 @@
     <div class="content">
         <h2>Analizadores</h2>
         <div>
-            {% if session['Tipo'] == 'Admin' %}
-            <a class="button is-green" href="{{url_for('AddAnalizer')}}" >Agregar Analizador</a>
+            {% if current_user.user_type == 'Admin' %}
+            <a class="button is-green" href="{{url_for('medidorRutas.AddAnalizer')}}" >Agregar Analizador</a>
             <br><br>
             {% endif %}
             <table>
@@ -29,12 +29,12 @@
                             {% endif %}
                         </td>
                         <td>{{ana[3]}}</td>
-                        {% if session['Tipo'] == 'Admin' %}
+                        {% if current_user.user_type == 'Admin' %}
                         <td>
-                            <a href="{{url_for('UpdateAnalizer', id=ana[0])}}" class="button is-blue">Editar</a>
+                            <a href="{{url_for('medidorRutas.UpdateAnalizer', id=ana[0])}}" class="button is-blue">Editar</a>
                         </td>
                         <td>
-                            <form action="{{url_for('DelAnalizer')}}" method="POST">
+                            <form action="{{url_for('medidorRutas.DelAnalizer')}}" method="POST">
                                 <input type="hidden" name="id" value="{{ana[0]}}">
                                 <button class="button is-red">Eliminar</button>
                             </form>
